@@ -1,53 +1,13 @@
 <script>const log = console.log;</script>
+<script src="./lib/fx.js"></script>
 <script>
   const products = [
-    {name: '반팔티', price: 15000},
-    {name: '긴팔티', price: 20000},
-    {name: '핸드폰케이스', price: 15000},
-    {name: '후드티', price: 30000},
-    {name: '바지', price: 25000}
+    {name: '반팔티', price: 15000, quantity: 1},
+    {name: '긴팔티', price: 20000, quantity: 2},
+    {name: '핸드폰케이스', price: 15000, quantity: 3},
+    {name: '후드티', price: 30000, quantity: 4},
+    {name: '바지', price: 25000, quantity: 5}
   ];
-
-  const add = (a, b) => a + b;
-
-  /* curry */
-  /* 확실히 curry 가 헷갈리네...*/
-  const curry = f => (a, ..._) => _.length ? f(a, ..._) : (..._) => f(a, ..._);
-  const mult = curry ((a, b) => a * b);
-  log(mult(1)(2));
-
-  /* map */
-  const map = curry((f, iter) => {
-    let res = [];
-    for (const a of iter) {
-      res.push(f(a));
-    }
-    return res;
-  });
-
-  /* filter */ 
-  const filter = curry((f, products) => {
-    let res = [];
-    for (const p of products) {
-      if (f(p)) res.push(p);
-    }
-    return res;
-  });
-
-  /* reduce */
-  const reduce = curry((f, acc, iter) => {
-    if (!iter) {
-      iter = acc[Symbol.iterator]();
-      acc = iter.next().value;
-    }
-    for (const n of iter) {
-      acc = f(acc, n);
-    }
-    return acc;
-  });
-  log(reduce(add, map(p => p.price, filter(p => p.price < 20000, products))));
-  log(reduce(add, filter(p => p < 20000, map(p => p.price, products))));
-  console.clear();
 
   /* go */
   const go = (...args) => reduce((a, f) => f(a), args);
@@ -103,5 +63,24 @@
     base_total_price(p => p.price < 20000),
     log
   );
+  
+  /* 총 수량, 총 가격 */
+  console.clear();
+  go(
+    products,
+    map(p => p.quantity),
+    reduce((a, b) => a + b),
+    log
+  );
+
+  const total_quantity1 = products => go(products,
+    map(p => p.quantity),
+    reduce((a, b) => a + b));
+  log(total_quantity1(products));
+  
+  const total_quantity2 = pipe(
+    map(p => p.quantity),
+    reduce((a, b) => a + b));
+  log(total_quantity2(products));
 </script>
 <body></body>
