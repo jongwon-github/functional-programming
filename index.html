@@ -11,17 +11,10 @@
 
   /* go */
   const go = (...args) => reduce((a, f) => f(a), args);
-  go(add(0, 1), a => a + 10, a => a + 100, log);
    
   /* pipe */
   const pipe = (f, ...fs) => (...as) => go(f(...as), ...fs);
-  const f = pipe(
-    (a, b) => a + b,
-    a => a + 10,
-    a => a + 100
-  );
-  log(f(0, 1));
-  
+
   /* go+curry를 사용하여 더 읽기 좋은 코드로 만들기 */
   go(
     products,
@@ -78,9 +71,16 @@
     reduce((a, b) => a + b));
   log(total_quantity1(products));
   
-  const total_quantity2 = pipe(
-    map(p => p.quantity),
-    reduce((a, b) => a + b));
+  // const total_quantity2 = pipe(
+  //   map(p => p.quantity),
+  //   reduce((a, b) => a + b));
+  // log(total_quantity2(products));
+  const sum = curry((f, iter) => go(
+    iter,
+    map(f),
+    reduce(add)
+  ));
+  const total_quantity2 = sum(p => p.quantity);
   log(total_quantity2(products));
 </script>
 <body></body>
