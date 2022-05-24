@@ -38,4 +38,15 @@
     log(list);
     log(reduce(add, list));
 </script>
+<script>
+    /* range와 느긋한 L.range 테스트 */
+    console.clear();
+    function test(name, time, f) {
+        console.time(name);
+        while (time--) f();
+        console.timeEnd(name);
+    }
+    test('range', 10, () => reduce(add, range(1000000)));
+    test('L.range', 10, () => reduce(add, L.range(1000000)));
+</script>
 <body></body>
