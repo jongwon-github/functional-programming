@@ -49,4 +49,25 @@
     test('range', 10, () => reduce(add, range(1000000)));
     test('L.range', 10, () => reduce(add, L.range(1000000)));
 </script>
+<script>
+    /* take */
+    console.clear();
+    const take = curry((l, iter) => {
+        let res = [];
+        for (const a of iter) {
+            res.push(a);
+            if (res.length == l) return res;
+        }
+        return res;
+    });
+    console.time('');
+    go(
+        range(100000),
+        take(5),
+        log);
+    console.timeEnd('');
+    console.time('');
+    log(take(5, L.range(100000)));
+    console.timeEnd('');
+</script>
 <body></body>

@@ -8,13 +8,7 @@
     {name: '후드티', price: 30000, quantity: 4},
     {name: '바지', price: 25000, quantity: 5}
   ];
-
-  /* go */
-  const go = (...args) => reduce((a, f) => f(a), args);
-   
-  /* pipe */
-  const pipe = (f, ...fs) => (...as) => go(f(...as), ...fs);
-
+  
   /* go+curry를 사용하여 더 읽기 좋은 코드로 만들기 */
   go(
     products,
