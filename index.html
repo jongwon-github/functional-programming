@@ -60,7 +60,8 @@
     log
   );
 
-  const total_quantity1 = products => go(products,
+  const total_quantity1 = products => go(
+    products,
     map(p => p.quantity),
     reduce((a, b) => a + b));
   log(total_quantity1(products));

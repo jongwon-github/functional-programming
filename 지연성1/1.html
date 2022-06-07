@@ -38,6 +38,7 @@
     log(list);
     log(reduce(add, list));
 </script>
+
 <script>
     /* range와 느긋한 L.range 테스트 */
     console.clear();
@@ -49,6 +50,7 @@
     test('range', 10, () => reduce(add, range(1000000)));
     test('L.range', 10, () => reduce(add, L.range(1000000)));
 </script>
+
 <script>
     /* take */
     console.clear();
@@ -60,14 +62,54 @@
         }
         return res;
     });
+
     console.time('');
     go(
         range(100000),
         take(5),
         log);
     console.timeEnd('');
+
     console.time('');
     log(take(5, L.range(100000)));
     console.timeEnd('');
+</script>
+
+<script>
+    /*
+        L.map, L.filter 정의
+    */
+   console.clear();
+     L.map = curry(function *(f, iter) { 
+        for (const a of iter) yield f(a);
+    });
+    // var it = L.map(a => a + 10, [1, 2, 3]);
+    // log(it.next());
+    // log(it.next());
+    // log(it.next());
+    // log([...it]);
+    
+    L.filter = curry(function *(f, iter) { 
+        for (const a of iter) if (f(a)) yield a;
+    });
+    // L.filter(a => a % 2, [1, 2, 3, 4]);
+</script>
+
+<script>
+    /*
+        range, map, filter, take, reduce 중첩 사용
+    */
+    console.clear();
+   go(range(10),
+   map(n => n + 10),
+   filter(n => n % 2),
+   take(2),
+   log);
+</script>
+
+<script>
+    /*
+        L.range, L.map, L.filter, take 의 평가 순서
+    */
 </script>
 <body></body>
