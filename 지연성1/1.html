@@ -56,7 +56,10 @@
     console.clear();
     const take = curry((l, iter) => {
         let res = [];
-        for (const a of iter) {
+        iter = iter[Symbol.iterator]();
+        let cur;
+        while (!(cur = iter.next()).done) { 
+            const a = cur.value;
             res.push(a);
             if (res.length == l) return res;
         }
@@ -79,9 +82,14 @@
     /*
         L.map, L.filter 정의
     */
-   console.clear();
-     L.map = curry(function *(f, iter) { 
-        for (const a of iter) yield f(a);
+    console.clear();
+    L.map = curry(function *(f, iter) { 
+        iter = iter[Symbol.iterator]();
+        let cur;
+        while (!(cur = iter.next()).done) {
+            const a = cur.value;
+            yield f(a);
+        }
     });
     // var it = L.map(a => a + 10, [1, 2, 3]);
     // log(it.next());
@@ -90,7 +98,12 @@
     // log([...it]);
     
     L.filter = curry(function *(f, iter) { 
-        for (const a of iter) if (f(a)) yield a;
+        iter = iter[Symbol.iterator]();
+        let cur;
+        while (!(cur = iter.next()).done) { 
+            const a = cur.value;
+            if (f(a)) yield a;
+        }
     });
     // L.filter(a => a % 2, [1, 2, 3, 4]);
 </script>
@@ -100,16 +113,22 @@
         range, map, filter, take, reduce 중첩 사용
     */
     console.clear();
-   go(range(10),
-   map(n => n + 10),
-   filter(n => n % 2),
-   take(2),
-   log);
+    go(range(10),
+    map(n => n + 10),
+    filter(n => n % 2),
+    take(2),
+    log);
 </script>
 
 <script>
     /*
         L.range, L.map, L.filter, take 의 평가 순서
     */
+    console.clear();
+    go(L.range(10),
+    L.map(n => n + 10),
+    L.filter(n => n % 2),
+    take(2),
+    log);
 </script>
 <body></body>
