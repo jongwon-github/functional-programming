@@ -1,0 +1,20 @@
+<script>const log = console.log;</script>
+<script src="../lib/fx.js"></script>
+<script>
+    // go 함수를 이용한 queryStr
+    const queryStr1 = obj => go(
+        obj,
+        Object.entries,
+        map(([k, v]) => `${k}=${v}`),
+        reduce((a, b) => `${a}&${b}`)
+    );
+    log(queryStr1({ limit: 10, offset: 10, type: 'notice'}));
+    
+    // pipe 함수를 이용한 queryStr
+    const queryStr = pipe(
+        Object.entries,
+        map(([k, v]) => `${k}=${v}`),
+        reduce((a, b) => `${a}&${b}`)
+    );
+    log(queryStr1({ limit: 10, offset: 10, type: 'notice'}));
+</script>
