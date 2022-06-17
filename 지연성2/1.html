@@ -3,9 +3,9 @@
 </script>
 <script src="../lib/fx.js"></script>
 <script>
-  L.entries = function* (iter) {
-    for (const a in iter) {
-      yield [a, iter[a]];
+  L.entries = function* (obj) {
+    for (const a in obj) {
+      yield [a, obj[a]];
     }
   };
 
