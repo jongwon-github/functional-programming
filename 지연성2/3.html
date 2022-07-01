@@ -5,6 +5,7 @@
 <script>
   const isIterable = (a) => a && a[Symbol.iterator];
 
+  /* 표현1 */
   L.flatten = function* (iter) {
     for (const a of iter) {
       if (isIterable(a)) for (const b of a) yield b;
@@ -21,14 +22,23 @@
   const flatten = pipe(L.flatten, takeAll);
   log(flatten([[1, 2], 3, 4, [5, 6], [7, 8, 9]]));
 
-  // curry를 재정의 해봅시다...
-  //   const curry =
-  //     (f) =>
-  //     (a, ..._) =>
-  //       _.length ? f(a, ..._) : (..._) => f(a, ..._);
-  // go를 재정의 해봅시다...
-  //const go = (...args) => reduce((a, f) = f(a), args);
-  // pipe를 재정의 해봅시다...
-  //const pipe = (f, ...args) => (...a) => go(f(...a), ...args);
+  /* 표현2 : 표현1의 for문을 'yield*'로 변경 */
+  L.flatten2 = function* (iter) {
+    for (const a of iter) {
+      if (isIterable(a)) yield* a;
+      else yield a;
+    }
+  };
+  log([...L.flatten2([[1, 2], 3, 4, [5, 6], [7, 8, 9]])]);
+
+  /* 깊은 iterable을 모두 펼치고 싶을 경우 사용 */
+  /* 기명함수를 통한 재귀호출 */
+  L.deepFlat = function* f(iter) {
+    for (const a of iter) {
+      if (isIterable(a)) yield* f(a);
+      else yield a;
+    }
+  };
+  log([...L.deepFlat([1, [2, [3, 4, [5]]]])]);
 </script>
 <body></body>
