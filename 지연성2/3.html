@@ -52,10 +52,11 @@
     ]
   );
   log([...fm]);
-  const flatMap = pipe(L.map, flatten);
+
+  const flatMap = curry(pipe(L.map, flatten));
   log(
     flatMap(
-      (a) => a * a,
+      (a) => a,
       [
         [1, 2],
         [3, 4],
@@ -63,5 +64,19 @@
       ]
     )
   );
+  log(
+    flatMap(
+      L.range,
+      map((a) => a + 1, [1, 2, 3])
+    )
+  );
+  var lfm = L.flatMap(
+    L.range,
+    map((a) => a + 1, [1, 2, 3])
+  );
+  log(lfm.next());
+  log(lfm.next());
+  log(lfm.next());
+  log(lfm.next());
 </script>
 <body></body>
