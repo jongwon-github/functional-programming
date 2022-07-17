@@ -1,0 +1,22 @@
+<script>
+    const log = console.log;
+  </script>
+<script>
+    function add10(a, callback) {
+        setTimeout(() => callback(a + 10), 1000); 
+    }
+
+    add10(5, res => {
+        log(res);
+    });
+
+    function add20(a) {
+        return new Promise(resolve => setTimeout(() => resolve(a + 20), 1000));
+    }
+
+    add20(5)
+    .then(add20)
+    .then(add20)
+    .then(log);
+</script>
+<body></body>
