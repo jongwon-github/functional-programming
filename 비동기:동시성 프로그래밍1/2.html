@@ -1,0 +1,22 @@
+<script>
+  const log = console.log;
+</script>
+<script src="./lib/fx.js"></script>
+<script>
+  /**/
+  const delay100 = (a) =>
+    new Promise((resolve) => setTimeout(() => resolve(a), 1000));
+
+  const go1 = (a, f) => (a instanceof Promise ? a.then(f) : f(a));
+  const add5 = (a) => a + 5;
+
+  // var r = go1(15, add5);
+  // log(r);
+  // var r2 = go1(delay100(20), add5);
+  // r2.then(log);
+  const n1 = 10;
+  log(go1(go1(n1, add5), log));
+  const n2 = delay100(20);
+  log(go1(go1(n2, add5), log));
+</script>
+<body></body>
