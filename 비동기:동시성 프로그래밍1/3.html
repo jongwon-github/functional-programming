@@ -1,0 +1,18 @@
+<script>
+    const log = console.log;
+  </script>
+<script>
+    // 합성 관점에서의 Promise와 모나드
+    const g = a => a + 1;
+    const f = a => a * a;
+
+    log(f(g(1)));
+    log(f(g()));
+
+    [1].map(g).map(f).forEach(r => log(r));
+    [].map(g).map(f).forEach(r => log(r));
+    [1, 2, 3].map(g).filter(a => a % 2).map(f).forEach(r => log(r));
+
+    Array.of(1).map(g).map(f).forEach(r => log(r));
+    Promise.resolve(2).then(g).then(f).then(r => log(r));
+</script>
