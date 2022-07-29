@@ -1,0 +1,24 @@
+<script src="../lib/fx.js"></script>
+<script>
+    const log = console.log;
+  </script>
+<script>
+    // Kleisli Composition 관점에서의 Promise
+    const find = curry((f, iter) => go(iter, L.filter(f), take(1), ([a]) => a));
+
+    var users = [
+        { id: 1, name: 'aa'},
+        { id: 2, name: 'bb'},
+        { id: 3, name: 'cc'}
+    ];
+
+    const getUserById = id => 
+    find(u => u.id == id, users) || Promise.reject('없어요!');
+
+    const f = ({ name }) => name;
+    const g = getUserById;
+
+    const fg = id => Promise.resolve(id).then(g).then(f).catch(a => a);
+    fg(2).then(log);
+</script>
+<body></body>
