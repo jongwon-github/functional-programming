@@ -1,0 +1,11 @@
+<script src="../lib/fx.js"></script>
+<script>
+    const log = console.log;
+</script>
+<script>
+    go(1,
+    a => a + 10,
+    a => Promise.resolve(a + 100),
+    a => a + 1000,
+    log);
+</script>

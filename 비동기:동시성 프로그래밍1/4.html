@@ -1,7 +1,7 @@
 <script src="../lib/fx.js"></script>
 <script>
     const log = console.log;
-  </script>
+</script>
 <script>
     // Kleisli Composition 관점에서의 Promise
     const find = curry((f, iter) => go(iter, L.filter(f), take(1), ([a]) => a));
