@@ -1,0 +1,12 @@
+<script src="../lib/fx.js"></script>
+<script>
+    const log = console.log;
+</script>
+<script>
+    go(/*[Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)],*/
+    [1, 2, 3],
+    L.map(a => a + 10),
+    take(2),
+    log);
+</script>
+<body></body>
