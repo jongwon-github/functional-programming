@@ -1,0 +1,11 @@
+<script src="../lib/fx.js"></script>
+<script>
+    const log = console.log;
+</script>
+<script>
+    go([1, 2, 3, 4],
+    L.map(a => Promise.resolve(a * a)),
+    L.filter(a => Promise.resolve(a % 2)),
+    reduce(add),
+    log);
+</script>
