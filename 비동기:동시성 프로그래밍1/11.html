@@ -1,0 +1,32 @@
+<script src="../lib/fx.js"></script>
+<script>
+    const log = console.log;
+</script>
+<script>
+    const C = {};
+    function noop() {};
+    const catchNoop = arr => 
+        (arr.forEach(a => a instanceof Promise ? a.catch(noop) : a), arr);
+
+    C.reduce = curry((f, acc, iter) => {
+        const iter2 = catchNoop(iter ? [...iter] : [...acc]);
+        return iter ?
+        reduce(f, acc, iter2) :
+        reduce(f, iter2)
+    });
+
+    const delay1000 = a => new Promise(resolve => {
+        console.log('hi~');
+        setTimeout(() => resolve(a), 1000);
+    });
+
+    go(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        L.map(a => delay1000(a * a)),
+        L.filter(a => delay1000(a % 2)),
+        L.map(a => delay1000(a * a)),
+        C.reduce(add),
+        log
+    );
+</script>
+<body></body>
